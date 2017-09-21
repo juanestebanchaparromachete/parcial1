@@ -1,4 +1,4 @@
-Copyright (c) 2017  Juan Esteban Chaparro, Alejandro Cordoba and other contributors:
+Copyright (c) 2017  Juan Esteban Chaparro
 
 https://github.com/juanestebanchaparromachete/sistema_cotizaciones
 
