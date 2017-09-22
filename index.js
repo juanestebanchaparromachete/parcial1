@@ -19,6 +19,53 @@ var github = new GitHubApi({});
 // TODO: optional authentication here depending on desired endpoints. See below in README.
 
 
+function postSer(callback, searchP) {
+    MongoClient.connect(url, function (err, db) {
+        if (err) throw err;
+
+        console.log("conectado a mongo");
+
+        var coll = db.collection("historyParcial1");
+
+        coll.insertMany([searchP], function (err, result) {
+
+        });
+
+        coll.find({}).toArray(function (err, pro) {
+            if (err) throw err;
+
+            console.log("hay " + pro.length + " searchs");
+
+            callback(err, pro);
+        });
+        db.close();
+    });
+
+}
+
+
+function getSer(callback) {
+    MongoClient.connect(url, function (err, db) {
+        if (err) throw err;
+
+        console.log("conectado a mongo");
+
+        var coll = db.collection("historyParcial1");
+
+
+        coll.find({}).toArray(function (err, pro) {
+            if (err) throw err;
+
+            console.log("hay " + pro.length + " searchs");
+
+            callback(err, pro);
+        });
+        db.close();
+    });
+
+}
+
+
 var app = express();
 var router = express.Router();
 
@@ -64,9 +111,40 @@ app.get('/getfollowers/:nameFollower', function (req, res) {
 
     github.users.getFollowingForUser({
         username: name
-    }, function (err, data) {
-        res.json(data);
+    }, function (err, dat) {
+        res.json(dat.data);
     });
+});
+
+
+app.get('/search', function (req, res) {
+    
+    getSer(function (err, searchs) {
+        if (err) {
+            res.json(["Error obteniendo search"]);
+            return;
+        }
+        res.json(searchs);
+    });
+    
+    });  
+
+app.post('/search', function (req, res) {
+
+    console.log(req);
+
+    var busq = {};
+    busq.date = Date();
+    busq.search = req.body;
+
+    postSer(function (err, searchs) {
+        if (err) {
+            res.json(["Error obteniendo search"]);
+            return;
+        }
+        res.json(searchs);
+    }, busq);
+
 });
 
 
