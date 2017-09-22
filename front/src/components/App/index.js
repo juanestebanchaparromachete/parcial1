@@ -17,7 +17,8 @@ export default class App extends Component {
             onSearch: [],
             followers: [],
             nombre: '',
-            history:[]
+            history:[],
+            following:[]
             
         };
         this.handleGet2 = this.handleGet2.bind(this);
@@ -42,6 +43,10 @@ export default class App extends Component {
         fetch('/getfollowers/'+this.state.nombre).then(res => res.json()).then(followers => this.setState({
                 followers
             }));
+        fetch('/reps/'+this.state.nombre).then(res => res.json()).then(following => this.setState({
+                following
+            }));
+
         
     }
     
@@ -52,7 +57,9 @@ export default class App extends Component {
         fetch('/getfollowers/'+data).then(res => res.json()).then(followers => this.setState({
                 followers
             }));
-        
+        fetch('/reps/'+data).then(res => res.json()).then(following => this.setState({
+                following
+            }));
     }
 
     nameChange(event) {
@@ -67,6 +74,7 @@ export default class App extends Component {
         fetch('/search').then(res => res.json()).then(history => this.setState({
             history
         }));
+
     }
 
     render() {
@@ -115,16 +123,47 @@ export default class App extends Component {
             src = { follower.avatar_url} / >
             <
             br / >
+            <div class="span2">
             <
             button type = "button"
             className = "btn btn-info btn-block" onClick = {() => { this.handleGet2(follower.login)}}  > {
                         follower.login
-                    } < /button> <
+                    } < /button> 
+                    </div><
             /div>)}
                 
             
 
-            </div>  
+            </div> 
+            
+            <div className="row" >     <
+            h1 > Siguiendo: < /h1>
+            </div>
+            <
+            div className = "listGithub row" >
+            
+            
+                {this.state.following.map(follow => <
+            div className = "contenedorUsuario col-sm-2 text-center" >
+            <
+            img className = "imagenUser"
+            alt = "100%x280"
+            src = { follow.avatar_url} / >
+            <
+            br / >
+            <div class="span2">
+            <
+            button type = "button"
+            className = "btn btn-info btn-block" onClick = {() => { this.handleGet2(follow.login)}}  > {
+                        follow.login
+                    } < /button> 
+                    </div><
+            /div>)}
+                
+            
+
+            </div> 
+            
             
             <div className="row" >     <
             h1 > Historial: < /h1>

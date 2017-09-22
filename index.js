@@ -116,6 +116,17 @@ app.get('/getfollowers/:nameFollower', function (req, res) {
     });
 });
 
+app.get('/reps/:name', function (req, res){
+    
+    let name = req.params.name;
+    github.users.getFollowingForUser({
+        username: name
+    }, function (err, dat) {
+        res.json(dat.data);
+    });
+    
+});
+
 
 app.get('/search', function (req, res) {
     
@@ -146,6 +157,8 @@ app.post('/search', function (req, res) {
     }, busq);
 
 });
+
+
 
 
 
