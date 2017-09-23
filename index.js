@@ -160,8 +160,5 @@ app.post('/search', function (req, res) {
 
 
 
-
-
-app.listen(8080, function () {
-    console.log("Listening on 8080");
-});
+app.set('port', process.env.PORT || 8080);
+app.listen(app.get('port'));
