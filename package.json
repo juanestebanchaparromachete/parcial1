@@ -4,8 +4,8 @@
   "description": "parcial1 nodeJs mongo react",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node index.js",
+      "heroku-postbuild": "cd front && npm install --only=dev && npm install && npm run build" 
   },
   "author": "Juan Esteban Chaparro",
   "license": "ISC",
